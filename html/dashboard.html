@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Up - Track Your Culinary Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #fef2f2 0%, #f0fdf4 100%);
+        }
+        
+        .red-gradient {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+        
+        .card-hover:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .backdrop-blur {
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white">
+    <nav class="bg-white border-b border-gray-200 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-16 h-16">
+                <img src="assets/logo.png" alt="Chef Up Logo" class="w-full h-full object-contain"/>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-900">Chef Up</h1>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#features" class="text-gray-600 hover:text-red-500 transition-colors">Features</a>
+                <a href="#how-it-works" class="text-gray-600 hover:text-red-500 transition-colors">How it Works</a>
+            </div>
+            <div class="flex space-x-4">
+                <button class="border border-red-500 text-red-500 hover:bg-red-50 px-4 py-2 rounded-md font-medium transition-colors">
+                    Sign In
+                </button>
+                <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-medium transition-colors">
+                    Get Started
+                </button>
+            </div>
+        </div>
+    </nav>
+    <section class="hero-gradient py-20 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                Track Your Culinary Journey
+                <span class="block text-red-500">Like Never Before</span>
+            </h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Organize, rate, and reflect on every recipe you try. From your to-do list to treasured favorites, 
+                Chef Up helps you become a more thoughtful and organized home cook.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-red-500 hover:bg-red-600 text-white px-8 py-4 text-lg font-medium rounded-md transition-colors">
+                    Start Cooking
+                </button>
+                <button class="border border-gray-300 px-8 py-4 text-lg font-medium rounded-md hover:bg-gray-50 transition-colors">
+                    See How It Works
+                </button>
+            </div>
+            
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="card-hover bg-white/80 backdrop-blur rounded-lg shadow-sm border p-4">
+                    <div class="w-full h-32 bg-gradient-to-r from-red-200 to-red-300 rounded-lg mb-3 flex items-center justify-center">
+                        <span class="text-red-800 font-semibold text-2xl">🍪</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900">Chocolate Chip Cookies</h3>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-yellow-400">
+                            <span class="text-sm">★★★★★</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-white/80 backdrop-blur rounded-lg shadow-sm border p-4">
+                    <div class="w-full h-32 bg-gradient-to-r from-red-200 to-red-300 rounded-lg mb-3 flex items-center justify-center">
+                        <span class="text-red-800 font-semibold text-2xl">🍝</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900">Pasta Primavera</h3>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-yellow-400">
+                            <span class="text-sm">★★★★☆</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-white/80 backdrop-blur rounded-lg shadow-sm border p-4">
+                    <div class="w-full h-32 bg-gradient-to-r from-red-200 to-red-300 rounded-lg mb-3 flex items-center justify-center">
+                        <span class="text-red-800 font-semibold text-2xl">🥘</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900">Thai Green Curry</h3>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-yellow-400">
+                            <span class="text-sm">★★★★★</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="features" class="py-20 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Everything You Need to Organize Your Recipes
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    From discovering new dishes to perfecting old favorites, Chef Up provides the tools 
+                    to make every cooking experience meaningful.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-red-500 text-2xl">📖</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Track Your Progress</h3>
+                    <p class="text-gray-600">
+                        Organize recipes into To-Do, Doing, and Done lists. Never lose track of what you want to try next.
+                    </p>
+                </div>
+
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-green-500 text-2xl">⭐</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Rate & Review</h3>
+                    <p class="text-gray-600">
+                        Give each recipe a star rating and write detailed reviews to remember what worked and what didn't.
+                    </p>
+                </div>
+
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-500 text-2xl">✓</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Personal Journal</h3>
+                    <p class="text-gray-600">
+                        Keep notes about modifications, cooking tips, and personal memories attached to each recipe.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="how-it-works" class="py-20 px-6 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Simple, Thoughtful Recipe Tracking
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Four steps to transform how you approach cooking
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-red-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                        1
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Discover</h3>
+                    <p class="text-gray-600">Find recipes from cookbooks, websites, or friends and add them to your to-do list.</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-red-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                        2
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Cook</h3>
+                    <p class="text-gray-600">Move recipes to "Doing" when you start cooking and follow along with your notes.</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-red-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                        3
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Reflect</h3>
+                    <p class="text-gray-600">Rate the recipe, write a review, and document any changes you made.</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-red-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                        4
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Organize</h3>
+                    <p class="text-gray-600">Tag recipes, create collections, and build your personal cookbook.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-20 px-6 red-gradient">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h2 class="text-4xl font-bold mb-4">
+                Ready to Transform Your Cooking?
+            </h2>
+            <p class="text-xl mb-8 opacity-90">
+                Join thousands of home cooks who are organizing their culinary adventures with Chef Up.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-md transition-colors">
+                    Start Your Free Account
+                </button>
+                <button class="border border-white text-white hover:bg-white hover:text-red-600 px-8 py-4 text-lg rounded-md transition-colors">
+                    Learn More
+                </button>
+            </div>
+            <p class="text-sm mt-4 opacity-75">
+                Free forever • No credit card required • Start cooking in 2 minutes
+            </p>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-16 h-16">
+                        <img src="assets/logo.png" alt="Chef Up Logo" class="w-full h-full object-contain"/>
+                        </div>
+                        <h3 class="text-xl font-bold">Chef Up</h3>
+                    </div>
+                    <p class="text-gray-400">
+                        Track your culinary journey like never before. Organize, rate, and reflect on every recipe you try.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">How it Works</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Mobile App</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">Recipes</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Recipe Collections</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Top Rated</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Food Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Cooking Tips</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Chef Up. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
