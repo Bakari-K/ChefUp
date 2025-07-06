@@ -6,4 +6,7 @@ def dashboard(request):
     return render(request, 'application/dashboard.html')
 
 def signup(request):
-    pass
+    return HttpResponse('Sign up')
+
+def login(request):
+    return HttpResponse('Login')

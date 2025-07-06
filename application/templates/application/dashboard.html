@@ -45,12 +45,16 @@
                 <a href="#how-it-works" class="text-gray-600 hover:text-red-500 transition-colors">How it Works</a>
             </div>
             <div class="flex space-x-4">
-                <button class="border border-red-500 text-red-500 hover:bg-red-50 px-4 py-2 rounded-md font-medium transition-colors">
-                    Sign In
-                </button>
-                <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-medium transition-colors">
-                    Get Started
-                </button>
+				<form action="{% url 'application:login' %}">
+					<button type="submit" class="border border-red-500 text-red-500 hover:bg-red-50 px-4 py-2 rounded-md font-medium transition-colors">
+						Sign In
+					</button>
+				</form>
+				<form action="{% url 'application:signup' %}">
+					<button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-medium transition-colors">
+						Get Started
+					</button>
+				</form>
             </div>
         </div>
     </nav>
