@@ -6,3 +6,16 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# C extensions
+*.so
+
+# Virtual environments
+venv/
+.env/
