@@ -1,4 +1,5 @@
 
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,13 +32,13 @@
         }
     </style>
 </head>
-<link rel="icon" type="image/x-icon" href="assets/favi.ico">
+<link rel="icon" href="{% static 'images/favi.ico' %}">
 <body class="min-h-screen bg-white">
     <nav class="bg-white border-b border-gray-200 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <div class="w-16 h-16">
-                <img src="assets/logo.png" alt="Chef Up Logo" class="w-full h-full object-contain"/>
+                <img src="{% static 'images/logo.png' %}" alt="Chef Up Logo" class="w-full h-full object-contain">
                 </div>
                 <h1 class="text-2xl font-bold text-gray-900">Chef Up</h1>
             </div>
@@ -46,10 +47,10 @@
                 <a href="#how-it-works" class="text-gray-600 hover:text-red-500 transition-colors">How it Works</a>
             </div>
             <div class="flex space-x-4">
-                <a href="login.html" class="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-md transition-colors inline-block text-center">
+                <a href="/login/" class="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-md transition-colors inline-block text-center">
                     Log In
                 </a>
-                <a href="signup.html" class="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-md transition-colors inline-block text-center">
+                <a href="/signup/" class="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-md transition-colors inline-block text-center">
                 Sign Up
             </a>
             </div>
@@ -69,9 +70,9 @@
                 <button class="bg-red-500 hover:bg-red-600 text-white px-8 py-4 text-lg font-medium rounded-md transition-colors">
                     Start Cooking
                 </button>
-                <button class="border border-gray-300 px-8 py-4 text-lg font-medium rounded-md hover:bg-gray-50 transition-colors">
+                <a href="/about/" class="border border-gray-300 px-8 py-4 text-lg font-medium rounded-md hover:bg-gray-50 transition-colors">
                     See How It Works
-                </button>
+                </a>
             </div>
             
             <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -213,12 +214,12 @@
                 Join thousands of home cooks who are organizing their culinary adventures with Chef Up.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="signup.html" class="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-md transition-colors inline-block text-center">
+                <a href="/signup/" class="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-md transition-colors inline-block text-center">
              Start Your Free Account
             </a>
-                <button class="border border-white text-white hover:bg-white hover:text-red-600 px-8 py-4 text-lg rounded-md transition-colors">
+                <a href="/about/" class="border border-white text-white hover:bg-white hover:text-red-600 px-8 py-4 text-lg rounded-md transition-colors">
                     Learn More
-                </button>
+                </a>
             </div>
             <p class="text-sm mt-4 opacity-75">
                 Free forever • No credit card required • Start cooking in 2 minutes
@@ -232,7 +233,7 @@
                 <div>
                     <div class="flex items-center space-x-2 mb-4">
                         <div class="w-16 h-16">
-                        <img src="assets/logo.png" alt="Chef Up Logo" class="w-full h-full object-contain"/>
+                        <img src="{% static 'images/logo.png' %}" alt="Chef Up Logo" class="w-full h-full object-contain">
                         </div>
                         <h3 class="text-xl font-bold">Chef Up</h3>
                     </div>
