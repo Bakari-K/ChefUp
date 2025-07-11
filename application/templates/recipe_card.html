@@ -1,0 +1,20 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<div class="card-hover bg-white/80 backdrop-blur rounded-lg shadow-sm border p-4">
+  <div class="w-full h-32 bg-gradient-to-r from-red-200 to-red-300 rounded-lg mb-3 flex items-center justify-center">
+    <span class="text-red-800 font-semibold text-2xl">{{ emote }}</span>
+  </div>
+  <div class="text-center">
+    <h3 class="font-semibold text-gray-900">{{ title }}</h3>
+    <div class="flex justify-center mt-2 space-x-1">
+      {% with total=5 %}
+        {% for i in ""|center:total %}
+          {% if forloop.counter <= rating %}
+            <span class="text-sm text-yellow-400">★</span>
+          {% else %}
+            <span class="text-sm text-gray-300">★</span>
+          {% endif %}
+        {% endfor %}
+      {% endwith %}
+    </div>
+  </div>
+</div>
