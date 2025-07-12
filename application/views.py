@@ -4,6 +4,9 @@ from django.contrib.auth import login, logout
 from .forms import SignupForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
+from .forms import UserSettingsForm
+
 
 # Create your views here.
 def index(request):
@@ -66,9 +69,21 @@ def profile(request, username=None):
 
 @login_required
 def settings(request):
-    return HttpResponse("<h1>Settings [in dev]</h1>")
+    if request.method == 'POST':
+        form = UserSettingsForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('settings')
+    else:
+        form = UserSettingsForm(instance=request.user)
+    
+    return render(request, 'settings.html', {'form': form})
 
 @login_required
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+@login_required
+def discover(request):
+    return render(request, 'discover.html')
