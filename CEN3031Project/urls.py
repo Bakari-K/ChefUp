@@ -29,4 +29,6 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('about/', views.about, name='about'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('profile/<str:username>/', views.profile, name='profile'),
+    path('settings/', views.settings, name='settings'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
