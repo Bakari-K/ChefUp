@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chef Up - Dashboard</title>
+  <title>Chef Up - Discover Recipes</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" href="{% static 'images/favi.ico' %}">
   <style>
@@ -31,29 +31,51 @@
         <h1 class="text-2xl font-bold text-gray-900">Chef Up</h1>
       </div>
       <div class="flex space-x-6 text-gray-600">
-        <a href="#" class="hover:text-red-500 font-medium">Dashboard</a>
-        <a href="/discover/" class="hover:text-red-500 font-medium">Discover</a>
+        <a href="/dashboard/" class="hover:text-red-500 font-medium">Dashboard</a>
+        <a href="/discover/" class="text-red-500 font-semibold">Discover</a>
         <a href="#" class="hover:text-red-500 font-medium">Recipes</a>
         <a href="/settings/" class="hover:text-red-500 font-medium">Settings</a>
         <a href="/profile/{{ user.username }}" class="hover:text-red-500 font-medium">Profile</a>
       </div>
     </div>
   </nav>
+
   <main class="flex-grow">
-    <section class="py-16 px-6 text-center">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4">Welcome back, Chef!</h2>
-        <p class="text-lg text-gray-700">Here are some recipe suggestions to get your creativity cooking.</p>
+    <section class="py-10 px-6 text-center">
+      <div class="max-w-4xl mx-auto mb-6">
+        <h2 class="text-4xl font-bold text-gray-900 mb-2">Discover New Recipes</h2>
+        <p class="text-lg text-gray-700">Explore curated ideas to inspire your next dish!</p>
+      </div>
+
+      <form method="GET" action="#" class="max-w-md mx-auto mt-6">
+        <div class="flex items-center border border-gray-300 rounded-full bg-white px-4 py-2 shadow-sm">
+          <input 
+            type="text" 
+            name="q" 
+            placeholder="Search recipes..." 
+            class="flex-grow outline-none text-sm text-gray-700"
+          />
+          <button type="submit" class="ml-2 text-red-500 font-semibold hover:underline">
+            Search
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="px-6 pb-12">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        {% for i in "123456789" %}
+          {% include "recipe_card.html" with emote="🍽️" title="Sample Recipe" rating=4 %}
+        {% endfor %}
       </div>
     </section>
-      <section class="pb-20 px-6">
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-      {% for recipe in recipes %}
-        {% include "recipe_card.html" with emote=recipe.emote title=recipe.title rating=recipe.rating %}
-      {% endfor %}
+
+    <div class="flex justify-center space-x-4 pb-16">
+      <a href="#" class="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100">Previous</a>
+      <a href="#" class="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100">Next</a>
     </div>
-  </section>
   </main>
+
   <footer class="bg-gray-900 text-white py-6 text-center">
     <p>&copy; 2025 Chef Up. All rights reserved.</p>
   </footer>

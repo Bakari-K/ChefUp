@@ -31,4 +31,5 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('profile/<str:username>/', views.profile, name='profile'),
     path('settings/', views.settings, name='settings'),
+    path('discover/' , views.discover, name='discover'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
