@@ -64,7 +64,7 @@ def dashboard(request):
 
 @login_required
 def profile(request, username=None):
-    return HttpResponse("<h1>Profile Page</h1>")
+    return render(request, 'profile.html', {'username': username})
     #Not proficient enough with HTML and CSS to make it, but definitely needs a button for "logout" that will redirect to the logout_view
 
 @login_required

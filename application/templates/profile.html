@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="{% static 'images/favi.ico' %}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chef Up - Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body>
+	<div class="flex space-x-4">
+        <a href="/logout/" class="bg-red text-red-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-md transition-colors">Log Out</a>
+    </div>
+</body>
+</html>
