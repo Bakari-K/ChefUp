@@ -33,4 +33,5 @@ urlpatterns = [
     path('settings/', views.settings, name='settings'),
     path('discover/' , views.discover, name='discover'),
     path('logout/', views.logout_view, name='logout'),
+    path('post/', views.post, name='post'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -72,7 +72,7 @@ class UserSettingsForm(forms.ModelForm):
 class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
-        fields = ['title', 'description', 'ingredients', 'instructions', 'created_at', 'author', 'is_public']
+        fields = ['title', 'description', 'ingredients', 'instructions', 'is_public']
         widgets = {
             'title': forms.TextInput(attrs={}),
             'description': forms.Textarea(attrs={}),
