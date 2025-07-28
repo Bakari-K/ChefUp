@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="{% static 'images/favi.ico' %}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chef Up - Post</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+  <div class="max-w-screen w-full bg-white p-8 rounded-xl shadow-md">
+    <div class="flex justify-center mb-6">
+      <img src="{% static 'images/logo.png' %}" alt="Chef Up Logo" class="w-16 h-16" />
+    </div>
+    <h2 class="text-center text-2xl font-bold text-gray-900 mb-6">Post Your Recipe</h2>
+
+    <form method="POST" class="space-y-5">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {% for field in form %}
+        <div>
+          <label class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <p class="text-sm text-red-600 mt-1">{{ field.errors|striptags }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button type="Post"
+        class="w-full bg-red-500 hover:bg-red-600 text-white py-3 px-4 rounded-md font-semibold text-lg transition-colors">
+        Post
+      </button>
+    </form>
+  </div>
+</body>
+</html>
