@@ -11,6 +11,8 @@ from .forms import UserSettingsForm
 
 # Create your views here.
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard') # Added so that home redirects to dashboard when signed in
     return render(request, 'index.html')
 
 def login_view(request):

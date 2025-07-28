@@ -18,13 +18,19 @@
     <div class="max-w-7xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2">
         <img src="{% static 'images/logo.png' %}" class="w-12 h-12" />
-        <h1 class="text-2xl font-bold text-gray-900">Chef Up</h1>
+        <h1 class="text-2xl font-bold text-gray-900">
+            <a href="{% url 'index' %}">
+                Chef Up
+            </a>
+        </h1>
       </div>
       <div class="flex space-x-6 text-gray-600">
         <a href="/dashboard/" class="hover:text-red-500">Dashboard</a>
         <a href="/discover/" class="hover:text-red-500">Discover</a>
-        <a href="/profile/{{ user.username }}" class="hover:text-red-500">Profile</a>
+        <a href="#" class="hover:text-red-500 font-medium">Recipes</a>
         <a href="/settings/" class="text-red-500 font-semibold">Settings</a>
+        <a href="/profile/{{ user.username }}" class="hover:text-red-500">Profile</a>
+        <a href="{% url 'about' %}" class="hover:text-red-500 font-medium">About</a>
       </div>
     </div>
   </nav>
