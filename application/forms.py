@@ -79,3 +79,11 @@ class RecipeForm(forms.ModelForm):
             'ingredients': forms.Textarea(attrs={}),
             'instructions': forms.Textarea(attrs={}),
         }
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = RecipeImage
+        fields = ['image']
+        widgets = {
+            'image': forms.FileInput(attrs={})
+        }

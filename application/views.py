@@ -2,7 +2,7 @@ from django.utils import timezone
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, logout
-from .forms import SignupForm, LoginForm, RecipeForm
+from .forms import SignupForm, LoginForm, RecipeForm, ImageForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -94,13 +94,19 @@ def discover(request):
 @login_required
 def post(request):
     if request.method == 'POST':
-        form = RecipeForm(request.POST)
-        if form.is_valid():
-            recipe = form.save(commit=False)
+        recipeForm = RecipeForm(request.POST)
+        imageForm = ImageForm(request.POST, request.FILES)
+        if recipeForm.is_valid() and imageForm.is_valid():
+            recipe = recipeForm.save(commit=False)
             recipe.author = request.user
             recipe.save()
+
+            image = imageForm.save(commit=False)
+            image.recipe = recipe
+            image.save()
         return redirect('discover')
     else:
-        form = RecipeForm()
+        recipeForm = RecipeForm()
+        imageForm = ImageForm()
 
-    return render(request, 'post.html', {'form': form})
+    return render(request, 'post.html', {'recipeForm': recipeForm, 'imageForm': imageForm})
