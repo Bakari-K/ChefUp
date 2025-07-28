@@ -25,11 +25,11 @@
         </h1>
       </div>
       <div class="flex space-x-6 text-gray-600">
-        <a href="/dashboard/" class="hover:text-red-500">Dashboard</a>
-        <a href="/discover/" class="hover:text-red-500">Discover</a>
+        <a href="{% url 'dashboard' %}" class="hover:text-red-500 font-medium">Dashboard</a>
+        <a href="{% url 'discover' %}" class="hover:text-red-500 font-medium">Discover</a>
         <a href="#" class="hover:text-red-500 font-medium">Recipes</a>
-        <a href="/settings/" class="text-red-500 font-semibold">Settings</a>
-        <a href="/profile/{{ user.username }}" class="hover:text-red-500">Profile</a>
+        <a href="{% url 'settings' %}" class="hover:text-red-500 font-medium">Settings</a>
+        <a href="{% url 'profile' user.username %}" class="hover:text-red-500 font-medium">Profile</a>
         <a href="{% url 'about' %}" class="hover:text-red-500 font-medium">About</a>
       </div>
     </div>
