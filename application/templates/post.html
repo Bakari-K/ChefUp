@@ -21,10 +21,11 @@
     </div>
     <h2 class="text-center text-2xl font-bold text-gray-900 mb-6">Post Your Recipe</h2>
 
-    <form method="POST" class="space-y-5">
+    <form method="POST" enctype="multipart/form-data" class="space-y-5">
+	
       {% csrf_token %}
-      {{ form.non_field_errors }}
-      {% for field in form %}
+      {{ recipeForm.non_field_errors }}
+      {% for field in recipeForm %}
         <div>
           <label class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
           {{ field }}
@@ -33,7 +34,19 @@
           {% endif %}
         </div>
       {% endfor %}
-
+		
+	  {% csrf_token %}
+	  {{ imageForm.non_field_errors }}
+	  {% for field in imageForm %}
+		<div>
+          <label class="block text-sm font-medium text-gray-700">Upload Images</label>
+          {{ field }}
+          {% if field.errors %}
+            <p class="text-sm text-red-600 mt-1">{{ field.errors|striptags }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+	  
       <button type="Post"
         class="w-full bg-red-500 hover:bg-red-600 text-white py-3 px-4 rounded-md font-semibold text-lg transition-colors">
         Post
