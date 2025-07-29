@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import UserSettingsForm
-
+from .models import Recipe, RecipeTag, Tag
+from django.db.models import Q
 
 # Create your views here.
 def index(request):
@@ -89,7 +90,36 @@ def logout_view(request):
 
 @login_required
 def discover(request):
-    return render(request, 'discover.html')
+    query = request.GET.get('q', '').strip()
+    tag_names = request.GET.getlist('tags')  # pills
+    
+    recipes = Recipe.objects.filter(is_public=True)
+
+    if query:
+        tag_recipe_ids = RecipeTag.objects.filter(
+            tag__name__icontains=query
+        ).values_list('recipe_id', flat=True)
+
+        recipes = recipes.filter(
+            Q(title__icontains=query) |
+            Q(description__icontains=query) |
+            Q(ingredients__icontains=query) |
+            Q(instructions__icontains=query) |
+            Q(id__in=tag_recipe_ids)
+        )
+
+    if tag_names:
+        for tag in tag_names:
+            recipes = recipes.filter(
+                recipetag__tag__name__iexact=tag
+            )
+
+    return render(request, 'discover.html', {
+        'recipes': recipes.distinct(),
+        'query': query,
+        'selected_tags': tag_names,
+        'all_tags': Tag.objects.all(),
+    })
 
 @login_required
 def post(request):

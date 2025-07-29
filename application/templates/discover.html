@@ -52,25 +52,52 @@
         <p class="text-lg text-gray-700">Explore curated ideas to inspire your next dish!</p>
       </div>
 
-      <form method="GET" action="#" class="max-w-md mx-auto mt-6">
-        <div class="flex items-center border border-gray-300 rounded-full bg-white px-4 py-2 shadow-sm">
-          <input 
-            type="text" 
-            name="q" 
-            placeholder="Search recipes..." 
-            class="flex-grow outline-none text-sm text-gray-700"
-          />
-          <button type="submit" class="ml-2 text-red-500 font-semibold hover:underline">
-            Search
-          </button>
-        </div>
-      </form>
+<form method="get" class="max-w-4xl mx-auto mt-6 px-4">
+  <!-- Search bar -->
+  <div class="flex items-center border border-gray-300 rounded-full bg-white px-4 py-2 shadow-sm mb-6">
+    <input 
+      type="text" 
+      name="q" 
+      value="{{ query }}" 
+      placeholder="Search recipes..." 
+      class="flex-grow outline-none text-sm text-gray-700"
+    />
+    <button type="submit" class="ml-2 text-red-500 font-semibold hover:underline">
+      Search
+    </button>
+  </div>
+
+  <div class="flex flex-wrap gap-2 justify-center">
+    {% for tag in all_tags %}
+      <label class="cursor-pointer">
+        <input 
+          type="checkbox" 
+          name="tags" 
+          value="{{ tag.name }}" 
+          class="hidden"
+          {% if tag.name in selected_tags %}checked{% endif %}
+          onchange="this.form.submit()"
+        />
+        <span class="inline-block px-3 py-1 rounded-full border text-sm 
+                    {% if tag.name in selected_tags %}
+                      bg-red-500 text-white border-red-500
+                    {% else %}
+                      bg-white text-gray-700 border-gray-300 hover:bg-gray-100
+                    {% endif %}">
+          #{{ tag.name }}
+        </span>
+      </label>
+    {% endfor %}
+  </div>
+</form>
     </section>
 
     <section class="px-6 pb-12">
       <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {% for i in "123456789" %}
-          {% include "recipe_card.html" with emote="🍽️" title="Sample Recipe" rating=4 %}
+        {% for recipe in recipes %}
+          {% include "recipe_card.html" with recipe=recipe %}
+        {% empty %}
+          <p class="col-span-full text-center text-gray-500">No recipes found for "{{ query }}".</p>
         {% endfor %}
       </div>
     </section>
