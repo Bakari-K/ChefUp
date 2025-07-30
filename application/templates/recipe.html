@@ -63,8 +63,11 @@
       {% if recipe.images.exists %}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           {% for image in recipe.images.all %}
-            <img src="{{ image.image.url }}" alt="{{ recipe.title }}" class="rounded shadow" />
-          {% endfor %}
+            <img 
+              src="{{ image.image.url }}" 
+              alt="{{ recipe.title }}" 
+              class="rounded shadow object-cover w-full max-h-96 mx-auto"
+            />          {% endfor %}
         </div>
       {% endif %}
 
