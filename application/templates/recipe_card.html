@@ -1,29 +1,33 @@
 <script src="https://cdn.tailwindcss.com"></script>
-<div class="card-hover bg-white/80 backdrop-blur rounded-lg shadow-sm border p-4">
-  <div class="w-full h-32 bg-gradient-to-r from-red-200 to-red-300 rounded-lg mb-3 flex items-center justify-center">
-    <span class="text-red-800 font-semibold text-2xl">🍽️</span> 
-  </div>
-  <div class="text-center">
-    <h3 class="font-semibold text-gray-900">{{ recipe.title }}</h3>
-    <p class="text-sm text-gray-500 mb-2">{{ recipe.description }}</p>
 
-    <div class="flex justify-center mt-2 space-x-1">
-      {% with total=5 %}
-        {% for i in ""|center:total %}
-          {% if forloop.counter <= 4 %} 
-            <span class="text-sm text-yellow-400">★</span>
-          {% else %}
-            <span class="text-sm text-gray-300">★</span>
-          {% endif %}
-        {% endfor %}
-      {% endwith %}
+<a href="{% url 'recipe_detail' recipe.id %}" class="block card-hover">
+  <div class="bg-white/80 backdrop-blur rounded-lg shadow-sm border p-4">
+    <div class="w-full h-32 bg-gradient-to-r from-red-200 to-red-300 rounded-lg mb-3 flex items-center justify-center">
+      <span class="text-red-800 font-semibold text-2xl">🍽️</span> 
     </div>
-    <div class="mt-3">
-      {% for tag in recipe.recipetag_set.all %}
-        <a href="?q={{ tag.tag.name }}" class="text-xs bg-gray-100 px-2 py-1 rounded-full mr-1 hover:bg-gray-200">
-          #{{ tag.tag.name }}
-        </a>
-      {% endfor %}
+    <div class="text-center">
+      <h3 class="font-semibold text-gray-900">{{ recipe.title }}</h3>
+      <p class="text-sm text-gray-500 mb-2">{{ recipe.description }}</p>
+
+      <div class="flex justify-center mt-2 space-x-1">
+        {% with total=5 %}
+          {% for i in ""|center:total %}
+            {% if forloop.counter <= 4 %} 
+              <span class="text-sm text-yellow-400">★</span>
+            {% else %}
+              <span class="text-sm text-gray-300">★</span>
+            {% endif %}
+          {% endfor %}
+        {% endwith %}
+      </div>
+
+      <div class="mt-3">
+        {% for tag in recipe.recipetag_set.all %}
+          <span class="text-xs bg-gray-100 px-2 py-1 rounded-full mr-1 hover:bg-gray-200">
+            #{{ tag.tag.name }}
+          </span>
+        {% endfor %}
+      </div>
     </div>
   </div>
-</div>
+</a>

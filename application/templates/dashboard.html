@@ -34,6 +34,7 @@
             </a>
         </h1>
       </div>
+      {% if user.is_authenticated %}
       <div class="flex space-x-6 text-gray-600">
         <a href="{% url 'dashboard' %}" class="hover:text-red-500 font-medium">Dashboard</a>
         <a href="{% url 'discover' %}" class="hover:text-red-500 font-medium">Discover</a>
@@ -42,6 +43,7 @@
         <a href="{% url 'profile' user.username %}" class="hover:text-red-500 font-medium">Profile</a>
         <a href="{% url 'about' %}" class="hover:text-red-500 font-medium">About</a>
       </div>
+      {% endif %}
     </div>
   </nav>
   <main class="flex-grow">
@@ -54,7 +56,7 @@
       <section class="pb-20 px-6">
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
       {% for recipe in recipes %}
-        {% include "recipe_card.html" with emote=recipe.emote title=recipe.title rating=recipe.rating %}
+        {% include "recipe_card.html" with recipe=recipe %}
       {% endfor %}
     </div>
   </section>
