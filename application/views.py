@@ -1,6 +1,6 @@
 from django.utils import timezone
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import login, logout
 from .forms import SignupForm, LoginForm, RecipeForm, ImageForm
 from django.contrib.auth.decorators import login_required
@@ -46,24 +46,7 @@ def about(request):
 @login_required
 def dashboard(request):
     user = request.user
-    recipes = [
-        {
-            'emote': '🍣',
-            'title': 'Spicy Tuna Sushi Rolls',
-            'rating': 4
-        },
-        {
-            'emote': '🥗',
-            'title': 'Mediterranean Quinoa Bowl',
-            'rating': 4
-        },
-        {
-            'emote': '🍲',
-            'title': 'Slow Cooker Chili',
-            'rating': 5
-        }
-    ]
-    # Once database setup we should replace the recipes with a database query
+    recipes = Recipe.objects.filter(is_public=True).order_by('-created_at')[:3]
     return render(request, 'dashboard.html', {'recipes': recipes, 'user': user})
 
 @login_required
@@ -91,7 +74,7 @@ def logout_view(request):
 @login_required
 def discover(request):
     query = request.GET.get('q', '').strip()
-    tag_names = request.GET.getlist('tags')  # pills
+    tag_names = request.GET.getlist('tags')  
     
     recipes = Recipe.objects.filter(is_public=True)
 
@@ -140,3 +123,13 @@ def post(request):
         imageForm = ImageForm()
 
     return render(request, 'post.html', {'recipeForm': recipeForm, 'imageForm': imageForm})
+
+@login_required
+def recipe_detail(request, recipe_id):
+    recipe = get_object_or_404(
+        Recipe.objects.select_related('author').prefetch_related('images', 'reviews', 'comments', 'recipetag_set__tag'),
+        id=recipe_id
+    )
+    if not recipe.is_public and recipe.author != request.user:
+        return redirect('discover')  
+    return render(request, 'recipe.html', {'recipe': recipe})

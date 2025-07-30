@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ recipe.title }} - Chef Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="{% static 'images/favi.ico' %}">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, #fef2f2 0%, #f0fdf4 100%);
+    }
+    .card-hover:hover {
+      transform: scale(1.03);
+      transition: transform 0.3s ease;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col hero-gradient">
+  <nav class="bg-white border-b border-gray-200 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <div class="w-16 h-16">
+          <img src="{% static 'images/logo.png' %}" alt="Chef Up Logo" class="w-full h-full object-contain" />
+        </div>
+        <h1 class="text-2xl font-bold text-gray-900">
+          <a href="{% url 'index' %}">Chef Up</a>
+        </h1>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="flex space-x-6 text-gray-600">
+        <a href="{% url 'dashboard' %}" class="hover:text-red-500 font-medium">Dashboard</a>
+        <a href="{% url 'discover' %}" class="hover:text-red-500 font-medium">Discover</a>
+        <a href="{% url 'post' %}" class="hover:text-red-500 font-medium">Recipes</a>
+        <a href="{% url 'settings' %}" class="hover:text-red-500 font-medium">Settings</a>
+        <a href="{% url 'profile' user.username %}" class="hover:text-red-500 font-medium">Profile</a>
+        <a href="{% url 'about' %}" class="hover:text-red-500 font-medium">About</a>
+      </div>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main class="flex-grow px-6 py-12">
+    <div class="max-w-4xl mx-auto bg-white shadow rounded-lg p-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">{{ recipe.title }}</h1>
+      <p class="text-sm text-gray-500 mb-6">
+        By {{ recipe.author.username }} • {{ recipe.created_at|date:"F j, Y" }}
+      </p>
+
+      <div class="mb-8">
+        <button 
+          class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition"
+          title="Save feature coming soon!">
+          Save Recipe
+        </button>
+      </div>
+
+      {% if recipe.images.exists %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          {% for image in recipe.images.all %}
+            <img src="{{ image.image.url }}" alt="{{ recipe.title }}" class="rounded shadow" />
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Description</h2>
+        <p class="text-gray-700">{{ recipe.description }}</p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Ingredients</h2>
+        <pre class="bg-gray-100 p-4 rounded whitespace-pre-wrap">{{ recipe.ingredients }}</pre>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Instructions</h2>
+        <pre class="bg-gray-100 p-4 rounded whitespace-pre-wrap">{{ recipe.instructions }}</pre>
+      </section>
+
+      {% if recipe.recipetag_set.exists %}
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-800 mb-2">Tags</h2>
+          <div class="flex flex-wrap gap-2">
+            {% for recipe_tag in recipe.recipetag_set.all %}
+              <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm">{{ recipe_tag.tag.name }}</span>
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Reviews</h2>
+        {% for review in recipe.reviews.all %}
+          <div class="bg-gray-50 border border-gray-200 rounded p-4 mb-4">
+            <div class="flex justify-between mb-1">
+              <span class="font-semibold">{{ review.user.username }}</span>
+              <span class="text-yellow-500">{{ review.rating }}★</span>
+            </div>
+            <p class="text-gray-600 text-sm">{{ review.created_at|date:"F j, Y" }}</p>
+            <p class="mt-1">{{ review.comment }}</p>
+          </div>
+        {% empty %}
+          <p class="text-gray-500">No reviews yet.</p>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+        <div class="mt-4 text-right">
+          <button 
+            class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition"
+            title="Review feature coming soon!">
+            Leave a Review
+          </button>
+        </div>
+        {% endif %}
+      </section>
+
+      <section class="mb-4">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Comments</h2>
+        {% for comment in recipe.comments.all %}
+          <div class="bg-white border border-gray-200 rounded p-4 mb-4">
+            <p class="font-semibold text-gray-900">{{ comment.user.username }}</p>
+            <p class="text-sm text-gray-600">{{ comment.created_at|date:"F j, Y" }}</p>
+            <p class="mt-2 text-gray-700">{{ comment.content }}</p>
+          </div>
+        {% empty %}
+          <p class="text-gray-500">No comments yet.</p>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+        <div class="mt-4 text-right">
+          <button 
+            class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition"
+            title="Comment feature coming soon!">
+            Add a Comment
+          </button>
+        </div>
+        {% endif %}
+      </section>
+    </div>
+  </main>
+
+  <footer class="bg-gray-900 text-white py-6 text-center">
+    <p>&copy; 2025 Chef Up. All rights reserved.</p>
+  </footer>
+</body>
+</html>
