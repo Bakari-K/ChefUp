@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chef Up - My Recipes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="{% static 'images/favi.ico' %}">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, #fef2f2 0%, #f0fdf4 100%);
+    }
+    .card-hover:hover {
+      transform: scale(1.03);
+      transition: transform 0.3s ease;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col hero-gradient">
+  <nav class="bg-white border-b border-gray-200 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <div class="w-16 h-16">
+          <img src="{% static 'images/logo.png' %}" alt="Chef Up Logo" class="w-full h-full object-contain" />
+        </div>
+        <h1 class="text-2xl font-bold text-gray-900">
+          <a href="{% url 'index' %}">Chef Up</a>
+        </h1>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="flex space-x-6 text-gray-600">
+        <a href="{% url 'dashboard' %}" class="hover:text-red-500 font-medium">Dashboard</a>
+        <a href="{% url 'discover' %}" class="hover:text-red-500 font-medium">Discover</a>
+        <a href="{% url 'user_recipes' %}" class="hover:text-red-500 font-medium">My Recipes</a>
+        <a href="{% url 'settings' %}" class="hover:text-red-500 font-medium">Settings</a>
+        <a href="{% url 'profile' user.username %}" class="hover:text-red-500 font-medium">Profile</a>
+      </div>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main class="flex-grow">
+    <section class="py-10 px-6">
+      <div class="max-w-4xl mx-auto text-center mb-6">
+        <h2 class="text-4xl font-bold text-gray-900 mb-2">My Saved Recipes</h2>
+        <p class="text-lg text-gray-700">Your personal cooking tracker.</p>
+      </div>
+
+      <div class="max-w-6xl mx-auto mb-6 flex justify-between items-center flex-wrap gap-4">
+        <div class="ml-auto">
+          <a href="{% url 'post' %}" class="px-5 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition">
+            Post
+          </a>
+        </div>
+      </div>
+
+      <form method="get" class="max-w-6xl mx-auto flex flex-wrap gap-2 justify-center mb-8">
+        {% for key, label in all_statuses.items %}
+          <label class="cursor-pointer">
+            <input 
+              type="radio" 
+              name="status" 
+              value="{{ key }}" 
+              class="hidden"
+              {% if key == selected_status %}checked{% endif %}
+              onchange="this.form.submit()"
+            />
+            <span class="inline-block px-3 py-1 rounded-full border text-sm 
+                         {% if key == selected_status %}
+                           bg-red-500 text-white border-red-500
+                         {% else %}
+                           bg-white text-gray-700 border-gray-300 hover:bg-gray-100
+                         {% endif %}">
+              {{ label }}
+            </span>
+          </label>
+        {% endfor %}
+        {% if selected_status %}
+          <a href="{% url 'user_recipes' %}" class="ml-2 text-sm text-gray-600 underline self-center">Clear</a>
+        {% endif %}
+      </form>
+    </section>
+
+    <section class="px-6 pb-12">
+      {% if status_tags %}
+        <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {% for tag in status_tags %}
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+              {% if tag.recipe.images.first %}
+              <div class="mb-4 rounded overflow-hidden h-40">
+                <img 
+                  src="{{ tag.recipe.images.first.image.url }}" 
+                  alt="{{ tag.recipe.title }}" 
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              {% endif %}
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ tag.recipe.title }}</h3>
+              <p class="text-sm text-gray-600 mb-4">
+                Status: <span class="capitalize">{{ tag.get_status_display }}</span>
+              </p>
+              <a href="{% url 'recipe_detail' tag.recipe.id %}" class="text-red-500 font-semibold hover:underline">
+                View Recipe
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-center text-gray-500">
+          You haven’t saved any recipes{% if selected_status %} for this status{% endif %}.
+        </p>
+      {% endif %}
+    </section>
+  </main>
+
+  <footer class="bg-gray-900 text-white py-6 text-center">
+    <p>&copy; 2025 Chef Up. All rights reserved.</p>
+  </footer>
+</body>
+</html>

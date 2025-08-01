@@ -36,10 +36,9 @@
       <div class="flex space-x-6 text-gray-600">
         <a href="{% url 'dashboard' %}" class="hover:text-red-500 font-medium">Dashboard</a>
         <a href="{% url 'discover' %}" class="hover:text-red-500 font-medium">Discover</a>
-        <a href="{% url 'post' %}" class="hover:text-red-500 font-medium">Recipes</a>
+        <a href="{% url 'user_recipes' %}" class="hover:text-red-500 font-medium">My Recipes</a>
         <a href="{% url 'settings' %}" class="hover:text-red-500 font-medium">Settings</a>
         <a href="{% url 'profile' user.username %}" class="hover:text-red-500 font-medium">Profile</a>
-        <a href="{% url 'about' %}" class="hover:text-red-500 font-medium">About</a>
       </div>
       {% endif %}
     </div>
@@ -52,13 +51,32 @@
         By {{ recipe.author.username }} • {{ recipe.created_at|date:"F j, Y" }}
       </p>
 
+      {% if user.is_authenticated %}
       <div class="mb-8">
-        <button 
-          class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition"
-          title="Save feature coming soon!">
-          Save Recipe
-        </button>
+        {% if saved_tag %}
+          <form method="post" class="inline">
+            {% csrf_token %}
+            <p class="text-sm text-gray-700 mb-2">
+              Saved as: <strong class="capitalize">{{ saved_tag.get_status_display }}</strong>
+            </p>
+            <input type="hidden" name="update_status" value="1">
+            <select name="status" onchange="this.form.submit()" class="rounded border-gray-300 p-2 text-sm">
+              <option value="want_to_make" {% if saved_tag.status == 'want_to_make' %}selected{% endif %}>To Do</option>
+              <option value="making" {% if saved_tag.status == 'making' %}selected{% endif %}>Doing</option>
+              <option value="made" {% if saved_tag.status == 'made' %}selected{% endif %}>Done</option>
+            </select>
+          </form>
+        {% else %}
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="save_recipe" value="1">
+            <button type="submit" class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition">
+              Save
+            </button>
+          </form>
+        {% endif %}
       </div>
+      {% endif %}
 
       {% if recipe.images.exists %}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -67,7 +85,8 @@
               src="{{ image.image.url }}" 
               alt="{{ recipe.title }}" 
               class="rounded shadow object-cover w-full max-h-96 mx-auto"
-            />          {% endfor %}
+            />
+          {% endfor %}
         </div>
       {% endif %}
 
