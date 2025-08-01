@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import UserSettingsForm
-from .models import Recipe, RecipeTag, Tag
+from .models import Recipe, RecipeTag, Tag, RecipeStatusTag
 from django.db.models import Q
 
 # Create your views here.
@@ -127,9 +127,51 @@ def post(request):
 @login_required
 def recipe_detail(request, recipe_id):
     recipe = get_object_or_404(
-        Recipe.objects.select_related('author').prefetch_related('images', 'reviews', 'comments', 'recipetag_set__tag'),
+        Recipe.objects.select_related('author')
+                      .prefetch_related('images', 'reviews', 'comments', 'recipetag_set__tag'),
         id=recipe_id
     )
+
     if not recipe.is_public and recipe.author != request.user:
-        return redirect('discover')  
-    return render(request, 'recipe.html', {'recipe': recipe})
+        return redirect('discover')
+
+    saved_tag = RecipeStatusTag.objects.filter(user=request.user, recipe=recipe).first()
+
+    if request.method == 'POST':
+        if 'save_recipe' in request.POST and not saved_tag:
+            RecipeStatusTag.objects.create(
+                user=request.user,
+                recipe=recipe,
+                status='want_to_make'
+            )
+            return redirect('recipe_detail', recipe_id=recipe_id)
+
+        elif 'update_status' in request.POST and saved_tag:
+            new_status = request.POST.get('status')
+            if new_status in ['want_to_make', 'making', 'made']:
+                saved_tag.status = new_status
+                saved_tag.save()
+                return redirect('recipe_detail', recipe_id=recipe_id)
+
+    return render(request, 'recipe.html', {
+        'recipe': recipe,
+        'saved_tag': saved_tag,  
+    })
+
+@login_required
+def user_recipes(request):
+    selected_status = request.GET.get("status", "")  
+    all_statuses = {
+        "want_to_make": "Want To Make",
+        "making": "Currently Making",
+        "made": "Made"
+    }
+    tags = RecipeStatusTag.objects.filter(user=request.user).select_related('recipe')
+
+    if selected_status in all_statuses:
+        tags = tags.filter(status=selected_status)
+    return render(request, 'user_recipes.html', {
+        'status_tags': tags,
+        'all_statuses': all_statuses,
+        'selected_status': selected_status,
+    })

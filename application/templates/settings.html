@@ -28,10 +28,9 @@
       <div class="flex space-x-6 text-gray-600">
         <a href="{% url 'dashboard' %}" class="hover:text-red-500 font-medium">Dashboard</a>
         <a href="{% url 'discover' %}" class="hover:text-red-500 font-medium">Discover</a>
-        <a href="{% url 'post' %}" class="hover:text-red-500 font-medium">Recipes</a>
+        <a href="{% url 'user_recipes' %}" class="hover:text-red-500 font-medium">My Recipes</a>
         <a href="{% url 'settings' %}" class="hover:text-red-500 font-medium">Settings</a>
         <a href="{% url 'profile' user.username %}" class="hover:text-red-500 font-medium">Profile</a>
-        <a href="{% url 'about' %}" class="hover:text-red-500 font-medium">About</a>
       </div>
       {% endif %}
     </div>
