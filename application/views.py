@@ -41,6 +41,8 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 def about(request):
+    if request.user.is_authenticated:
+        return render(request, 'about_loggedin.html')
     return render(request, 'about_loggedout.html')
 
 @login_required
@@ -50,21 +52,16 @@ def dashboard(request):
     return render(request, 'dashboard.html', {'recipes': recipes, 'user': user})
 
 @login_required
-def profile(request, username=None):
-    return render(request, 'profile.html', {'username': username})
-    #Not proficient enough with HTML and CSS to make it, but definitely needs a button for "logout" that will redirect to the logout_view
-
-@login_required
-def settings(request):
+def profile(request):
     if request.method == 'POST':
         form = UserSettingsForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('settings')
+            return redirect('profile')
     else:
         form = UserSettingsForm(instance=request.user)
     
-    return render(request, 'settings.html', {'form': form})
+    return render(request, 'profile.html', {'form': form})
 
 @login_required
 def logout_view(request):
