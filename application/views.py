@@ -41,7 +41,7 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'about_loggedout.html')
 
 @login_required
 def dashboard(request):

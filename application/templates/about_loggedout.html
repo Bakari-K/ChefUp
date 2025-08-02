@@ -1,0 +1,39 @@
+{% extends 'base_loggedout.html' %}
+{% block content %}
+
+  <main class="hero-gradient py-20 px-6 flex-grow">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-5xl font-bold text-gray-900 mb-6">About Chef Up</h1>
+      <p class="text-xl text-gray-600 mb-12">
+        Chef Up is your digital kitchen companion — helping you plan, track, and reflect on your cooking.
+        Whether you're exploring new dishes or refining your favorites, Chef Up supports your culinary growth.
+      </p>
+      <div class="grid md:grid-cols-2 gap-12 text-left text-gray-700">
+        <div>
+          <h2 class="text-2xl font-semibold mb-4 text-red-600">What We Offer</h2>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Organize recipes in To-Do, Doing, and Done stages</li>
+            <li>Rate, review, and journal your cooking experiences</li>
+            <li>Build collections of favorite meals</li>
+            <li>Simple and intuitive mobile-friendly design</li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold mb-4 text-red-600">Why Choose Chef Up?</h2>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Built for simplicity with a clean, focused interface</li>
+            <li>Designed for real-world home cooking</li>
+            <li>Access your content anywhere, anytime</li>
+            <li>Free to use — no subscriptions or hidden paywalls</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12">
+        <a href="/" class="inline-block bg-red-500 hover:bg-red-600 text-white px-8 py-4 text-lg font-semibold rounded-md transition-colors">
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </main>
+
+{% endblock content %}

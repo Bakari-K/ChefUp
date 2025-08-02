@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chef Up - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="{% static 'images/favi.ico' %}">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, #fef2f2 0%, #f0fdf4 100%);
+    }
+    .card-hover:hover {
+      transform: scale(1.03);
+      transition: transform 0.3s ease;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col hero-gradient">
+  <nav class="bg-white border-b border-gray-200 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <div class="w-16 h-16">
+          <img src="{% static 'images/logo.png' %}" alt="Chef Up Logo" class="w-full h-full object-contain" />
+        </div>
+        <h1 class="text-2xl font-bold text-gray-900">
+            <a href="{% url 'dashboard' %}">
+                Chef Up
+            </a>
+        </h1>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="flex space-x-6 text-gray-600">
+        <a href="{% url 'dashboard' %}" class="hover:text-red-500 font-medium">Dashboard</a>
+        <a href="{% url 'discover' %}" class="hover:text-red-500 font-medium">Discover</a>
+        <a href="{% url 'user_recipes' %}" class="hover:text-red-500 font-medium">My Recipes</a>
+        <a href="{% url 'settings' %}" class="hover:text-red-500 font-medium">Settings</a>
+        <a href="{% url 'profile' user.username %}" class="hover:text-red-500 font-medium">Profile</a>
+      </div>
+      {% endif %}
+    </div>
+  </nav>
+{% block content %}
+
+{% endblock content %}
+    <footer class="bg-gray-900 text-white py-6 text-center">
+    <p>&copy; 2025 Chef Up. All rights reserved.</p>
+  </footer>
+</body>
+</html>

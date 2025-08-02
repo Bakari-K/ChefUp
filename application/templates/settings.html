@@ -1,40 +1,5 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Chef Up - Settings</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="icon" href="{% static 'images/favi.ico' %}">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-  </style>
-</head>
-<body class="min-h-screen flex flex-col hero-gradient bg-gradient-to-br from-red-50 to-green-50">
-  <nav class="bg-white border-b px-6 py-4">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <img src="{% static 'images/logo.png' %}" class="w-12 h-12" />
-        <h1 class="text-2xl font-bold text-gray-900">
-            <a href="{% url 'index' %}">
-                Chef Up
-            </a>
-        </h1>
-      </div>
-      {% if user.is_authenticated %}
-      <div class="flex space-x-6 text-gray-600">
-        <a href="{% url 'dashboard' %}" class="hover:text-red-500 font-medium">Dashboard</a>
-        <a href="{% url 'discover' %}" class="hover:text-red-500 font-medium">Discover</a>
-        <a href="{% url 'user_recipes' %}" class="hover:text-red-500 font-medium">My Recipes</a>
-        <a href="{% url 'settings' %}" class="hover:text-red-500 font-medium">Settings</a>
-        <a href="{% url 'profile' user.username %}" class="hover:text-red-500 font-medium">Profile</a>
-      </div>
-      {% endif %}
-    </div>
-  </nav>
+{% extends 'base_loggedin.html' %}
+{% block content %}
 
   <main class="flex-grow px-4 py-10 max-w-xl mx-auto w-full">
     <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Account Settings</h2>
@@ -66,8 +31,4 @@
 
   </main>
 
-  <footer class="bg-gray-900 text-white text-center py-6">
-    &copy; 2025 Chef Up. All rights reserved.
-  </footer>
-</body>
-</html>
+{% endblock content %}
