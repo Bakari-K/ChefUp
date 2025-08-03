@@ -89,12 +89,13 @@
         {% endfor %}
 
         {% if user.is_authenticated %}
+		
         <div class="mt-4 text-right">
-          <button 
-            class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition"
-            title="Review feature coming soon!">
+          <a
+			href="{% url 'rate' recipe.id %}"
+            class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition">
             Leave a Review
-          </button>
+          </a>
         </div>
         {% endif %}
       </section>
