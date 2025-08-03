@@ -2,12 +2,12 @@ from django.utils import timezone
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import login, logout
-from .forms import SignupForm, LoginForm, RecipeForm, ImageForm
+from .forms import SignupForm, LoginForm, RecipeForm, ImageForm, RatingForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import UserSettingsForm, CommentForm
-from .models import Recipe, RecipeTag, Tag, RecipeStatusTag, Comment
+from .models import Recipe, RecipeTag, Tag, RecipeStatusTag, Comment, Review
 from django.db.models import Q
 
 # Create your views here.
@@ -170,6 +170,29 @@ def recipe_detail(request, recipe_id):
         'saved_tag': saved_tag,
         'comment_form': comment_form,
     })
+
+@login_required
+def recipe_rate(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    saved_rating = Review.objects.filter(user=request.user, recipe=recipe).first()
+
+    if request.method == 'POST':
+        rating_form = RatingForm(request.POST)
+        if rating_form.is_valid():
+            if saved_rating:    #Not sure about this method
+                saved_rating.rating = rating_form.cleaned_data['rating']
+                saved_rating.comment = rating_form.cleaned_data['comment']
+                saved_rating.save()
+                return redirect('recipe_detail', recipe_id=recipe_id)
+            else:
+                rating = rating_form.save(commit=False)
+                rating.user = request.user
+                rating.recipe = recipe
+                rating.save()
+                return redirect('recipe_detail', recipe_id=recipe_id)
+    else:
+        rating_form = RatingForm()
+    return render(request, 'rate.html', {'recipe': recipe, 'saved_rating': saved_rating, 'rating_form': rating_form})
 
 @login_required
 def user_recipes(request):

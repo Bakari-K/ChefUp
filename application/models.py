@@ -23,7 +23,7 @@ class RecipeImage(models.Model):
 class Review(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='reviews')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rating = models.PositiveSmallIntegerField(choices=[(i, i) for i in range(1, 6)])  # 1-5 stars
+    rating = models.PositiveSmallIntegerField(choices=[(i, i) for i in range(1, 6)], default=5)  # 1-5 stars
     comment = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     # Guarantees one review per user
