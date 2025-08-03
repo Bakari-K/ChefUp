@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from application.models import Recipe, RecipeImage
+from application.models import Recipe, RecipeImage, Comment
 
 
 class SignupForm(UserCreationForm):
@@ -86,4 +86,16 @@ class ImageForm(forms.ModelForm):
         fields = ['image']
         widgets = {
             'image': forms.FileInput(attrs={})
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'rows': 3,
+                'placeholder': 'Write your comment here...',
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-red-100'
+            })
         }

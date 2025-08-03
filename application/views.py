@@ -6,8 +6,8 @@ from .forms import SignupForm, LoginForm, RecipeForm, ImageForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import UserSettingsForm
-from .models import Recipe, RecipeTag, Tag, RecipeStatusTag
+from .forms import UserSettingsForm, CommentForm
+from .models import Recipe, RecipeTag, Tag, RecipeStatusTag, Comment
 from django.db.models import Q
 
 # Create your views here.
@@ -20,6 +20,7 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
         if form.is_valid():
+            messages.success(request, 'Logged in successfully')
             user = form.get_user()
             login(request, user)
             return redirect('dashboard')
@@ -31,6 +32,7 @@ def signup(request):
     if request.method == "POST":
         form = SignupForm(request.POST)
         if form.is_valid():
+            messages.success(request, 'Account created successfully')
             user = form.save(commit=False)
             user.email = form.cleaned_data['email']
             user.save()
@@ -56,6 +58,7 @@ def profile(request):
     if request.method == 'POST':
         form = UserSettingsForm(request.POST, instance=request.user)
         if form.is_valid():
+            messages.success(request, 'Your settings updated successfully')
             form.save()
             return redirect('profile')
     else:
@@ -107,6 +110,7 @@ def post(request):
         recipeForm = RecipeForm(request.POST)
         imageForm = ImageForm(request.POST, request.FILES)
         if recipeForm.is_valid() and imageForm.is_valid():
+            messages.success(request, 'Recipe successfully posted')
             recipe = recipeForm.save(commit=False)
             recipe.author = request.user
             recipe.save()
@@ -133,6 +137,7 @@ def recipe_detail(request, recipe_id):
         return redirect('discover')
 
     saved_tag = RecipeStatusTag.objects.filter(user=request.user, recipe=recipe).first()
+    comment_form = CommentForm()
 
     if request.method == 'POST':
         if 'save_recipe' in request.POST and not saved_tag:
@@ -150,9 +155,20 @@ def recipe_detail(request, recipe_id):
                 saved_tag.save()
                 return redirect('recipe_detail', recipe_id=recipe_id)
 
+        elif 'add_comment' in request.POST:
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.user = request.user
+                comment.recipe = recipe
+                comment.save()
+                messages.success(request, 'Your comment has been added!')
+                return redirect('recipe_detail', recipe_id=recipe_id)
+
     return render(request, 'recipe.html', {
         'recipe': recipe,
-        'saved_tag': saved_tag,  
+        'saved_tag': saved_tag,
+        'comment_form': comment_form,
     })
 
 @login_required
@@ -172,3 +188,20 @@ def user_recipes(request):
         'all_statuses': all_statuses,
         'selected_status': selected_status,
     })
+
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    recipe_id = comment.recipe.id
+
+    # Only allow the comment author to delete their comment
+    if comment.user != request.user:
+        messages.error(request, "You can only delete your own comments.")
+        return redirect('recipe_detail', recipe_id=recipe_id)
+
+    if request.method == 'POST':
+        comment.delete()
+        messages.success(request, 'Your comment has been deleted.')
+
+    return redirect('recipe_detail', recipe_id=recipe_id)
