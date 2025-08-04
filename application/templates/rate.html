@@ -7,29 +7,50 @@
       <p class="text-sm text-gray-500 mb-6">
         By {{ recipe.author.username }} • {{ recipe.created_at|date:"F j, Y" }}
       </p>
-	  
-	  {% if user.is_authenticated %}
-		<div class="mb-8">
-			<form method="post">
-				{% csrf_token %}
-				{{ rating_form.non_field_errors }}
-				{% for field in rating_form %}
-					<div>
-					<label class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
-					{{ field }}
-					{% if field.errors %}
-						<p class="text-sm text-red-600 mt-1">{{ field.errors|striptags }}</p>
-					{% endif %}
-					</div>
-				{% endfor %}
-				<div class="text-right">
-                      <button type="submit" class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition">
-                          Post Review
-                      </button>
+
+      {% if user.is_authenticated %}
+        <div class="mb-8">
+          <form method="post">
+            {% csrf_token %}
+            {{ rating_form.non_field_errors }}
+
+            {% for field in rating_form %}
+              {% if field.name == 'rating' %}
+                <div class="flex items-center mb-4">
+                  <label class="block text-sm font-medium text-gray-700 mr-4">{{ field.label }}</label>
+                  <div class="flex items-center flex-row-reverse justify-end">
+                    {% for star in "54321" %}
+                      <input id="star-{{ star }}" type="radio" name="rating" value="{{ star }}" class="hidden peer">
+                      <label for="star-{{ star }}" class="cursor-pointer text-3xl peer-hover:text-yellow-400 peer-checked:text-yellow-400 text-gray-300 transition">
+                        ★
+                      </label>
+                    {% endfor %}
+                  </div>
                 </div>
-		</div>
-	  {% endif %}
-	  
+                {% if field.errors %}
+                  <p class="text-sm text-red-600 mt-1">{{ field.errors|striptags }}</p>
+                {% endif %}
+              {% else %}
+                <div class="mb-4">
+                  <label class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+                  {{ field }}
+                  {% if field.errors %}
+                    <p class="text-sm text-red-600 mt-1">{{ field.errors|striptags }}</p>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+
+            <div class="text-right">
+              <button type="submit" class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition">
+                Post Review
+              </button>
+            </div>
+          </form>
+        </div>
+      {% endif %}
+
+    </div>
   </main>
 
 {% endblock content %}
