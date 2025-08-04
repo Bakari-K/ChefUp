@@ -11,6 +11,7 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipes')
+    avg_review = models.FloatField(default=0)
     is_public = models.BooleanField(default=True)
 
 # Many Images to one Recipe
