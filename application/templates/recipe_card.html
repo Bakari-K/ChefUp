@@ -22,7 +22,7 @@
       <div class="flex justify-center mt-2 space-x-1">
         {% with total=5 %}
           {% for i in ""|center:total %}
-            {% if forloop.counter <= 4 %} 
+            {% if recipe.avg_review >= forloop.counter %} 
               <span class="text-sm text-yellow-400">★</span>
             {% else %}
               <span class="text-sm text-gray-300">★</span>

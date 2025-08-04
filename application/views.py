@@ -183,12 +183,14 @@ def recipe_rate(request, recipe_id):
                 saved_rating.rating = rating_form.cleaned_data['rating']
                 saved_rating.comment = rating_form.cleaned_data['comment']
                 saved_rating.save()
+                update_average(recipe)
                 return redirect('recipe_detail', recipe_id=recipe_id)
             else:
                 rating = rating_form.save(commit=False)
                 rating.user = request.user
                 rating.recipe = recipe
                 rating.save()
+                update_average(recipe)
                 return redirect('recipe_detail', recipe_id=recipe_id)
     else:
         rating_form = RatingForm()
@@ -228,3 +230,18 @@ def delete_comment(request, comment_id):
         messages.success(request, 'Your comment has been deleted.')
 
     return redirect('recipe_detail', recipe_id=recipe_id)
+
+
+def update_average(recipe):
+    total = 0
+    avg = 0
+    for review in Review.objects.filter(recipe=recipe):
+        avg += review.rating
+        total += 1
+
+    if total > 0:
+        recipe.avg_review = avg / total
+    else:
+        recipe.avg_review = 0
+
+    recipe.save()
