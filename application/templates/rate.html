@@ -1,0 +1,35 @@
+{% extends 'base_loggedin.html' %}
+{% block content %}
+
+  <main class="flex-grow px-6 py-12">
+    <div class="max-w-4xl mx-auto bg-white shadow rounded-lg p-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">{{ recipe.title }}</h1>
+      <p class="text-sm text-gray-500 mb-6">
+        By {{ recipe.author.username }} • {{ recipe.created_at|date:"F j, Y" }}
+      </p>
+	  
+	  {% if user.is_authenticated %}
+		<div class="mb-8">
+			<form method="post">
+				{% csrf_token %}
+				{{ rating_form.non_field_errors }}
+				{% for field in rating_form %}
+					<div>
+					<label class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+					{{ field }}
+					{% if field.errors %}
+						<p class="text-sm text-red-600 mt-1">{{ field.errors|striptags }}</p>
+					{% endif %}
+					</div>
+				{% endfor %}
+				<div class="text-right">
+                      <button type="submit" class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition">
+                          Post Review
+                      </button>
+                </div>
+		</div>
+	  {% endif %}
+	  
+  </main>
+
+{% endblock content %}

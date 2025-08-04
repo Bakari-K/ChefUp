@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from application.models import Recipe, RecipeImage, Comment
+from application.models import Recipe, RecipeImage, Comment, Review
 
 
 class SignupForm(UserCreationForm):
@@ -98,4 +98,17 @@ class CommentForm(forms.ModelForm):
                 'placeholder': 'Write your comment here...',
                 'class': 'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-red-100'
             })
+        }
+
+class RatingForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rating', 'comment']
+        widgets = {
+            'rating': forms.RadioSelect(attrs={}),
+            'comment': forms.Textarea(attrs={
+                'rows': 3,
+                'placeholder': 'Write your rating here...',
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-red-100'
+            }),
         }

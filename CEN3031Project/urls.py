@@ -36,4 +36,5 @@ urlpatterns = [
     path('recipe/<int:recipe_id>/', views.recipe_detail, name='recipe_detail'),
     path('my-recipes/', views.user_recipes, name='user_recipes'),
     path('comment/delete/<int:comment_id>/', views.delete_comment, name='delete_comment'),
+    path('rate/<int:recipe_id>/', views.recipe_rate, name='rate'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
