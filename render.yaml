@@ -1,20 +1,20 @@
 databases:
-  - name: CEN3031Projectdb
+  - name: cen3031projectdb
     plan: free
-    databaseName: CEN3031Project
-    user: CEN3031Project
+    databaseName: cen3031project
+    user: cen3031projectuser
 
 services:
   - type: web
     plan: free
-    name: CEN3031Project
+    name: cen3031project
     runtime: python
     buildCommand: './build.sh'
     startCommand: 'python -m gunicorn CEN3031Project.asgi:application -k uvicorn.workers.UvicornWorker'
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: CEN3031Projectdb
+          name: cen3031projectdb
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
