@@ -1,0 +1,22 @@
+databases:
+  - name: chef-up-database
+    plan: free
+    databaseName: CEN3031Project
+    user: CEN3031Project
+
+services:
+  - type: web
+    plan: free
+    name: CEN3031Project
+    runtime: python
+    buildCommand: './build.sh'
+    startCommand: 'python -m gunicorn CEN3031Project.asgi:application -k uvicorn.workers.UvicornWorker'
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: chef-up-database
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
