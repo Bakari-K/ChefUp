@@ -2,6 +2,8 @@
 
 Chef Up is a collaborative recipe sharing platform built with [Django](https://www.djangoproject.com/). Follow the instructions below to run the project locally for development and testing.
 
+![Chef Up Home Screen](ChefUpHome.png)
+
 ---
 
 ## 🚀 Getting Started
