@@ -1,6 +1,6 @@
-# CEN3031 Project
+# Chef Up
 
-This is a Django web application built with [Django](https://www.djangoproject.com/). Follow the instructions below to run the project locally for development and testing.
+Chef Up is a collaborative recipe sharing platform built with [Django](https://www.djangoproject.com/). Follow the instructions below to run the project locally for development and testing.
 
 ---
 
